@@ -4,7 +4,14 @@ _chronic.format = function(time,format){
 	//kind of a lame way to do it, but for now each new format will need an if statement
 	var d = new Date(time);
 	if(format == 'MM/DD HH:MM'){
-		return _chronic.padZeros(d.getMonth()+1,2) + '/' + _chronic.padZeros(d.getDate()) + ' ' + _chronic.padZeros(d.getHours()) +':'+ _chronic.padZeros(d.getMinutes());
+		return _chronic.padZeros(d.getMonth()+1,2) + '/' + _chronic.padZeros(d.getDate(),2) + ' ' + _chronic.padZeros(d.getHours(),2) +':'+ _chronic.padZeros(d.getMinutes(),2);
+	}
+	if(format == 'MM/DD/YY'){
+		yr = d.getFullYear().toString();
+		return _chronic.padZeros(d.getMonth()+1,2) + '/' + _chronic.padZeros(d.getDate(),2) + '/' + yr.slice(yr.length-2,yr.length);
+	}
+	if(format == 'HH:MM') {
+		return _chronic.padZeros(d.getHours(),2) +':'+ _chronic.padZeros(d.getMinutes(),2);
 	}
 }
 
