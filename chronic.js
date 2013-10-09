@@ -13,6 +13,10 @@ _chronic.format = function(time,format){
 	if(format == 'HH:MM') {
 		return _chronic.padZeros(d.getHours(),2) +':'+ _chronic.padZeros(d.getMinutes(),2);
 	}
+	if(format == 'm/d/yy') {
+		yr = d.getFullYear().toString();
+		return d.getMonth()+1 + '/' + d.getDate() + '/' + yr.slice(yr.length-2,yr.length);
+	}
 }
 
 _chronic.padZeros = function (number,digits){
@@ -24,6 +28,10 @@ _chronic.padZeros = function (number,digits){
 		}
 	}
 	return number;
+}
+
+_chronic.now = function(){
+	return new Date().getTime();
 }
 
 _chronic.today = function(){
@@ -39,12 +47,16 @@ _chronic.thisWeek = function(sunday){
 	} else {
 		return (new Date(d.getFullYear(),d.getMonth(),d.getDate()-d.getDay()+1)).getTime();	
 	}
-	
 }
 
 _chronic.thisMonth = function(){
 	var d = new Date();
 	return (new Date(d.getFullYear(),d.getMonth(),1)).getTime();
+}
+
+_chronic.thisYear = function(){
+	var d = new Date();
+	return (new Date(d.getFullYear(),0,1)).getTime();
 }
 
 _chronic.timeMachine = function(datetime,shift){
@@ -59,11 +71,11 @@ _chronic.timeMachine = function(datetime,shift){
 	var array = shift.split('');
 	var number = '';
 	for (var i=0; i<array.length; i++){
-		if(!isNaN(parseInt(array[i]))){
+		if(!isNaN(parseInt(array[i]))||array[i]==='.'){
 			number = number + array[i].toString();
 		}
 	}
-	number = parseInt(number);
+	number = parseFloat(number);
 	var mod = 0;
 	if(array[array.length-1] == 'h'){
 		mod = number*60*60*1000;
